@@ -1,4 +1,4 @@
-# YOLO + EasyOCR Car Number Plate Detector (Local)
+# YOLO + EasyOCR Car Number Plate Detector
 
 This project gives you:
 - `backend/`: FastAPI API using YOLO for plate detection and EasyOCR for text extraction.
@@ -75,3 +75,21 @@ Frontend URL:
 
 - If `models/best.pt` does not exist, backend falls back to `yolov8n.pt` (generic model, poor plate accuracy).
 - Best accuracy comes from training on your plate dataset from Roboflow.
+
+## Live hosting (Render)
+
+This repo supports one-service deployment (FastAPI + built React frontend) using:
+- `Dockerfile`
+- `render.yaml`
+
+### Deploy steps
+
+1. Go to Render dashboard and create a **Web Service** from this GitHub repo.
+2. Render will auto-detect `render.yaml`.
+3. Deploy branch `main`.
+4. Wait for build and open the generated URL.
+
+Your app endpoints after deploy:
+- `/` -> frontend UI
+- `/health` -> backend health
+- `/predict` -> prediction API

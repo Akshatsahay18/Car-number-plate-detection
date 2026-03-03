@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: car-number-plate-detector
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: MODEL_PATH
+        value: models/best.pt
+      - key: TARGET_CLASS
+        value: plate
+      - key: CONFIDENCE_THRESHOLD
+        value: "0.2"
+      - key: MAX_DETECTIONS
+        value: "1"
+      - key: FALLBACK_CONFIDENCE_THRESHOLD
+        value: "0.01"
+      - key: FALLBACK_MAX_DETECTIONS
+        value: "50"
+      - key: ENABLE_FALLBACK_PASS
+        value: "true"
+      - key: USE_GPU
+        value: "false"
+      - key: CORS_ORIGINS
+        value: "*"

@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import cv2
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from .config import settings
 from .detector import PlateDetector
@@ -53,3 +56,9 @@ async def predict(file: UploadFile = File(...)) -> PredictionResponse:
         detections=detections,
         warning=detector.warning_message(),
     )
+
+
+# In production we serve built React assets from the same app.
+frontend_dist = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+if frontend_dist.exists():
+    app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
